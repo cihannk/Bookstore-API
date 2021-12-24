@@ -13,7 +13,7 @@ namespace BookstoreWebApi.BookOperations.CreateBook{
             Book book = _dbContext.Books.SingleOrDefault(book => book.Title == Model.Title);
 
             if (book is not null){
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("Eklemek istedigin kitap zaten var");
             }
 
             book = new Book();

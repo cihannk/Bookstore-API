@@ -4,15 +4,16 @@ using BookstoreWebApi.Entity;
 namespace BookstoreWebApi.BookOperations.GetBook{
     public class GetBookQuery{
         private readonly BookstoreDbContext _dbContext;
+        public int BookId { get; set; }
         public GetBookQuery(BookstoreDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-        public BookViewModel Handle(int id){
+        public BookViewModel Handle(){
             BookViewModel vm = new BookViewModel();
-            Book book = _dbContext.Books.Where(x => x.ID == id).FirstOrDefault();
+            Book book = _dbContext.Books.Where(x => x.ID == BookId).FirstOrDefault();
             if (book is null){
-                throw new Exception("Kitap mevcut değil");
+                throw new InvalidOperationException("Kitap mevcut değil");
             }
             vm.Title = book.Title;
             vm.PageCount = book.PageCount;

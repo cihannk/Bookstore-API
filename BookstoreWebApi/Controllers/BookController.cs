@@ -32,7 +32,8 @@ namespace BookstoreWebApi.Controllers {
             BookViewModel vm;
             try
             {
-                 vm = getBookQuery.Handle(id);
+                getBookQuery.BookId = id;
+                vm = getBookQuery.Handle();
             }
             catch (Exception ex)
             {
@@ -63,7 +64,8 @@ namespace BookstoreWebApi.Controllers {
             try
             {
                  updateBookCommand.Model = updatedBook;
-                 updateBookCommand.Handle(id);
+                 updateBookCommand.BookId = id;
+                 updateBookCommand.Handle();
             }
             catch (Exception ex)
             {
@@ -73,13 +75,19 @@ namespace BookstoreWebApi.Controllers {
         }
         [HttpDelete("{id}")]
         public IActionResult DeleteBook(int id){
-            Book deletingBook = _context.Books.SingleOrDefault(book => book.ID == id);
-            if (deletingBook is null){
-                return BadRequest();
+            DeleteBookCommand deleteBookCommand = new DeleteBookCommand(_context);
+            try
+            {
+                 deleteBookCommand.BookId = id;
+                 deleteBookCommand.Handle();
             }
-            _context.Books.Remove(deletingBook);
-            _context.SaveChanges();
-            return Ok();
+            catch (Exception ex)
+            {
+                
+                return BadRequest(ex.Message);
+            }
+
+            return Ok("Kitap basariyla silindi");
         }
     }
 }

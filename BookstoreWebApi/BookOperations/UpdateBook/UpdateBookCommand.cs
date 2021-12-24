@@ -5,15 +5,16 @@ namespace BookstoreWebApi.BookOperations.UpdateBook{
     public class UpdateBookCommand{
         private readonly BookstoreDbContext _dbContext;
         public UpdateBookModel Model { get; set; }
+        public int BookId { get; set; }
         public UpdateBookCommand(BookstoreDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-        public void Handle(int id){
-            Book book = _dbContext.Books.SingleOrDefault(book => book.ID == id);
+        public void Handle(){
+            Book book = _dbContext.Books.SingleOrDefault(book => book.ID == BookId);
 
             if (book is null){
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("Kitap bulunamadi");
             }
 
             book.GenreID = Model.GenreID == default ? book.GenreID : Model.GenreID;
