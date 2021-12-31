@@ -1,8 +1,9 @@
 using AutoMapper;
 using BookstoreWebApi.DBOperations;
 using BookstoreWebApi.Entity;
+using Microsoft.EntityFrameworkCore;
 
-namespace BookstoreWebApi.BookOperations.GetBook{
+namespace BookstoreWebApi.Application.BookOperations.Queries.GetBook{
     public class GetBookQuery{
         private readonly BookstoreDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -13,15 +14,11 @@ namespace BookstoreWebApi.BookOperations.GetBook{
             _mapper = mapper;
         }
         public BookViewModel Handle(){
-            Book book = _dbContext.Books.Where(x => x.ID == BookId).FirstOrDefault();
+            Book book = _dbContext.Books.Include(x => x.Genre).Where(x => x.ID == BookId).FirstOrDefault();
             if (book is null){
                 throw new InvalidOperationException("Kitap mevcut değil");
             }
             BookViewModel vm = _mapper.Map<BookViewModel>(book);
-            // vm.Title = book.Title;
-            // vm.PageCount = book.PageCount;
-            // vm.PublishDate = book.PublishDate.Date.ToString("dd/MM/yyy");
-            // vm.Genre = ((GenreEnum)book.GenreID).ToString();
             return vm;
         }
         

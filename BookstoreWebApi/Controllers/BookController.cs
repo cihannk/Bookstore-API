@@ -3,13 +3,13 @@ using BookstoreWebApi.Entity;
 using System.Linq;
 using System.Diagnostics;
 using BookstoreWebApi.DBOperations;
-using BookstoreWebApi.BookOperations.GetBooks;
-using BookstoreWebApi.BookOperations.CreateBook;
-using BookstoreWebApi.BookOperations.UpdateBook;
-using BookstoreWebApi.BookOperations.GetBook;
+using BookstoreWebApi.Application.BookOperations.Queries.GetBooks;
+using BookstoreWebApi.Application.BookOperations.Commands.CreateBook;
+using BookstoreWebApi.Application.BookOperations.Commands.UpdateBook;
+using BookstoreWebApi.Application.BookOperations.Queries.GetBook;
 using AutoMapper;
 using FluentValidation;
-using BookstoreWebApi.BookOperations.DeleteBook;
+using BookstoreWebApi.Application.BookOperations.Commands.DeleteBook;
 
 namespace BookstoreWebApi.Controllers
 {
@@ -40,16 +40,11 @@ namespace BookstoreWebApi.Controllers
             GetBookQuery getBookQuery = new GetBookQuery(_context, _mapper);
             GetBookQueryValidator validator = new GetBookQueryValidator();
             BookViewModel vm;
-            try
-            {
-                getBookQuery.BookId = id;
-                validator.ValidateAndThrow(getBookQuery);
-                vm = getBookQuery.Handle();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            getBookQuery.BookId = id;
+
+            validator.ValidateAndThrow(getBookQuery);
+            vm = getBookQuery.Handle();
+
             return Ok(vm);
         }
 
@@ -59,16 +54,11 @@ namespace BookstoreWebApi.Controllers
 
             CreateBookCommand bookCommand = new CreateBookCommand(_context, _mapper);
             CreateBookCommandValidator validator = new CreateBookCommandValidator();
-            try
-            {
-                bookCommand.Model = newBook;
-                validator.ValidateAndThrow(bookCommand);
-                bookCommand.Handle();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            bookCommand.Model = newBook;
+
+            validator.ValidateAndThrow(bookCommand);
+            bookCommand.Handle();
+
             return Ok("Kitap basariyla eklendi");
         }
 
@@ -77,17 +67,13 @@ namespace BookstoreWebApi.Controllers
         {
             UpdateBookCommand updateBookCommand = new UpdateBookCommand(_context);
             UpdateBookCommandValidator validator = new UpdateBookCommandValidator();
-            try
-            {
-                updateBookCommand.Model = updatedBook;
-                updateBookCommand.BookId = id;
-                validator.ValidateAndThrow(updateBookCommand);
-                updateBookCommand.Handle();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
+            updateBookCommand.Model = updatedBook;
+            updateBookCommand.BookId = id;
+
+            validator.ValidateAndThrow(updateBookCommand);
+            updateBookCommand.Handle();
+
             return Ok();
         }
         [HttpDelete("{id}")]
@@ -95,17 +81,10 @@ namespace BookstoreWebApi.Controllers
         {
             DeleteBookCommand deleteBookCommand = new DeleteBookCommand(_context);
             DeleteBookCommandValidator validator = new DeleteBookCommandValidator();
-            try
-            {
-                deleteBookCommand.BookId = id;
-                validator.ValidateAndThrow(deleteBookCommand);
-                deleteBookCommand.Handle();
-            }
-            catch (Exception ex)
-            {
 
-                return BadRequest(ex.Message);
-            }
+            deleteBookCommand.BookId = id;
+            validator.ValidateAndThrow(deleteBookCommand);
+            deleteBookCommand.Handle();
 
             return Ok("Kitap basariyla silindi");
         }

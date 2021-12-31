@@ -11,6 +11,8 @@ public class Book {
     [Required]
     public int GenreID {get;set;}
     [Required]
+    public Genre Genre {get;set;}
+    [Required]
     public int PageCount { get; set; }
     [Required]
     public DateTime PublishDate { get; set; }

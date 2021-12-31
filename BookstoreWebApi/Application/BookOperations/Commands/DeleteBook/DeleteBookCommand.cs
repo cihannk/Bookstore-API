@@ -1,6 +1,6 @@
 using BookstoreWebApi.DBOperations;
 
-namespace BookstoreWebApi.BookOperations.UpdateBook{
+namespace BookstoreWebApi.Application.BookOperations.Commands.DeleteBook{
     public class DeleteBookCommand{
         private readonly BookstoreDbContext _dbContext;
         public int BookId { get; set; }

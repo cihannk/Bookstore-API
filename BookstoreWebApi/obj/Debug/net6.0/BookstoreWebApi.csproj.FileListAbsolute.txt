@@ -31,3 +31,4 @@ C:\Users\Cihan\Desktop\pratikler\Bookstore\BookstoreWebApi\bin\Debug\net6.0\Micr
 C:\Users\Cihan\Desktop\pratikler\Bookstore\BookstoreWebApi\bin\Debug\net6.0\AutoMapper.dll
 C:\Users\Cihan\Desktop\pratikler\Bookstore\BookstoreWebApi\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Cihan\Desktop\pratikler\Bookstore\BookstoreWebApi\bin\Debug\net6.0\FluentValidation.dll
+C:\Users\Cihan\Desktop\pratikler\Bookstore\BookstoreWebApi\bin\Debug\net6.0\Newtonsoft.Json.dll

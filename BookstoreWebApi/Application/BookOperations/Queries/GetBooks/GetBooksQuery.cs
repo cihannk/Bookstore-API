@@ -1,8 +1,9 @@
 using AutoMapper;
 using BookstoreWebApi.DBOperations;
 using BookstoreWebApi.Entity;
+using Microsoft.EntityFrameworkCore;
 
-namespace BookstoreWebApi.BookOperations.GetBooks
+namespace BookstoreWebApi.Application.BookOperations.Queries.GetBooks
 {
     public class GetBooksQuery
     {
@@ -15,19 +16,8 @@ namespace BookstoreWebApi.BookOperations.GetBooks
         }
         public List<BooksViewModel> Handle()
         {
-            var bookList = _dbContext.Books.OrderBy(book => book.ID).ToList<Book>();
+            var bookList = _dbContext.Books.Include(x => x.Genre).OrderBy(book => book.ID).ToList<Book>();
             List<BooksViewModel> vm = _mapper.Map<List<BooksViewModel>>(bookList);
-
-            // foreach (var book in bookList)
-            // {
-            //     vm.Add(new BooksViewModel
-            //     {
-            //         Title = book.Title,
-            //         PageCount = book.PageCount,
-            //         PublishDate = book.PublishDate.Date.ToString("dd/MM/yyy"),
-            //         Genre = ((GenreEnum)book.GenreID).ToString()
-            //     });
-            // }
             return vm;
         }
 

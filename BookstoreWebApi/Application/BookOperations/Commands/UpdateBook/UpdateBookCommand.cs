@@ -1,7 +1,7 @@
 using BookstoreWebApi.DBOperations;
 using BookstoreWebApi.Entity;
 
-namespace BookstoreWebApi.BookOperations.UpdateBook{
+namespace BookstoreWebApi.Application.BookOperations.Commands.UpdateBook{
     public class UpdateBookCommand{
         private readonly BookstoreDbContext _dbContext;
         public UpdateBookModel Model { get; set; }
