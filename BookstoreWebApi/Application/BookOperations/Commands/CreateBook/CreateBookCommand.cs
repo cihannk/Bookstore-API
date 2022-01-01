@@ -19,12 +19,7 @@ namespace BookstoreWebApi.Application.BookOperations.Commands.CreateBook{
                 throw new InvalidOperationException("Eklemek istedigin kitap zaten var");
             }
 
-            book = _mapper.Map<Book>(Model); //new Book();
-
-            // book.Title = Model.Title;
-            // book.GenreID = Model.GenreId;
-            // book.PublishDate= Model.PublishDate;
-            // book.PageCount = Model.PageCount;
+            book = _mapper.Map<Book>(Model);
 
             _dbContext.Books.Add(book);
             _dbContext.SaveChanges();
@@ -34,6 +29,7 @@ namespace BookstoreWebApi.Application.BookOperations.Commands.CreateBook{
     public class CreateBookModel {
         public string Title { get; set; }
         public int GenreId { get; set; }
+        public int AuthorId { get; set; }
         public int PageCount { get; set; }
         public DateTime PublishDate { get; set; }
     }

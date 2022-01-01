@@ -20,6 +20,7 @@ namespace BookstoreWebApi.Application.GenreOperations.Queries.GetGenres
         }
     }
     public class GenresViewModel{
+        public int Id { get; set; }
          public string Name { get; set; }
     }
 }
